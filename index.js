@@ -1,17 +1,14 @@
 "use strict";
 var request = require('request');
 
-var ActivitiAPI = (function () {
-    function ActivitiAPI(uri) {
-        this.uri = uri;
-    }
-    ActivitiAPI.prototype.init = function () {
-        return this.uri;
-    };
-    return ActivitiAPI;
-}());
+var ActivitiAPI = function(uri,username,password){
+  this.uri = uri;
+  this.username = username;
+  this.password = password;
+};
 
-exports = ActivitiAPI;
-exports.ActivitiAPI = ActivitiAPI;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = ActivitiAPI;
+ActivitiAPI.prototype.getInfo = function(){
+	return this.uri + ' ' + this.username + ' ' + this.password;
+};
+
+exports.ActivitiAPI = ActivitiAPI; // usage: activitiAPI = new ActivitiAPI(ActivitiData);

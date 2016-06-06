@@ -1,6 +1,6 @@
 {
   "name": "activiti-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Acriviti api using rest",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Pooler22/Activiti-api/issues"
   },
-  "homepage": "https://github.com/Pooler22/Activiti-api#readme"
+  "homepage": "https://github.com/Pooler22/Activiti-api#readme",
+  "dependencies": {
+    "request": "2.72.0"
+  }
 }
