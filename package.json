@@ -1,6 +1,6 @@
 {
   "name": "activiti-api",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Acriviti api using rest",
   "main": "index.js",
   "scripts": {
