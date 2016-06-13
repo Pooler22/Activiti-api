@@ -12,72 +12,43 @@ class ActivitiAPI {
         return this.uri + ' ' + this.username + ' ' + this.password;
     }
 
-    listProcessesDef(processName){
-        request.get(`${ this.uri }/repository/process-definitions?nameLike=${ processName }`, {
-                'auth': {
-                    'user': this.username,
-                    'pass': this.password,
-                    'sendImmediately': false
-                },
-                multipart: [{
-                    'content-type': 'application/json'
-                }],
-            },
-            function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    return console.error('failed:', err);
-                }
-                return console.log('successful, responded:', body);
-            });
+    //Process Instances
+
+    //Get a process instance
+    getProcessInstances(processDefinitionId = '') {
+        return request.get(`${this.uri}/runtime/process-instances/${processDefinitionId}`)
+            .auth(this.username, this.password, false);
     }
 
-    listProcessesDef1(){
-        request.get(`${ this.uri }/repository/process-definitions`, {
-                'auth': {
-                    'user': this.username,
-                    'pass': this.password,
-                    'sendImmediately': false
-                },
-                multipart: [{
-                    'content-type': 'application/json'
-                }],
-            },
-            function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    return console.error('failed:', err);
-                }
-                return console.log('successful, responded:', body);
-            });
+    //Delete a process instance
+    deleteProcessInstances(processDefinitionId) {
+        return request.delete(`${this.uri}/runtime/process-instances/${processDefinitionId}`)
+            .auth(this.username, this.password, false);
     }
 
-    startProcessInstance(nameProcess, variables) {
-        //example: startProcessInstance("oneTaskProcess:1:158",
-        //          [{"name": "myVar","value": "This is a variable"}]);
-        var startProcessURI = '/runtime/process-instances';
-        request.post(this.uri + startProcessURI, {
-                'auth': {
-                    'user': this.username,
-                    'pass': this.password,
-                    'sendImmediately': false
-                },
-                multipart: [{
-                    'content-type': 'application/json',
-                    body: JSON.stringify({
-                        "processDefinitionId": nameProcess,
-                        //"businessKey": "myBusinessKey",
-                        "variables": variables
-                    })
-                }],
-            },
-            function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    return console.error('failed:', err);
-                }
-                return console.log('successful, responded:', body);
-            });
+    //Activate or suspend a process instance
+    putProcessInstances(processDefinitionId, actionStatus) { //suspend or activate
+        return request({
+            method: 'PUT',
+            uri: `${this.uri}/runtime/process-instances/${processDefinitionId}`,
+            multipart: [{
+                'content-type': 'application/json',
+                body: JSON.stringify({
+                    action: actionStatus,
+                })
+            }]
+        }).auth(this.username, this.password, false);
     }
 
-
+    //Start a process instance
+    postProcessInstance(bodyRequest) {
+        return request.post(`${this.uri}/runtime/process-instances/`, {
+            multipart: [{
+                'content-type': 'application/json',
+                body: JSON.stringify(bodyRequest)
+            }],
+        }).auth(this.username, this.password, false);
+    }
 }
 
 exports.ActivitiAPI = ActivitiAPI; // usage: activitiAPI = new ActivitiAPI(ActivitiData);

@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/Pooler22/Activiti-api#readme",
   "dependencies": {
-    "request": "2.72.0"
+    "request": "2.72.0",
+    "request-promise": "3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",

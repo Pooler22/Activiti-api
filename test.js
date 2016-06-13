@@ -2,8 +2,18 @@
 
 var ActivitiAPI = require('./distribution/index').ActivitiAPI;
 
-var activitiAPI = new ActivitiAPI("http://212.191.78.182:8081/activiti-rest/service","kermit","kermit");
+var uri = 'http://212.191.78.182:8081/activiti-rest/service';
 
-activitiAPI.listProcessesDef1();
+var activitiAPI = new ActivitiAPI(uri, 'kermit', 'kermit');
 
-console.log(activitiAPI.getInfo());
+// activitiAPI.getProcessDefinitions('process:3:1562').on('data', function(data) {
+//     console.log(JSON.parse(data));
+// });
+
+var body = {
+   "processDefinitionId":"Obslug_automatyczne:1:11485",
+};
+
+ activitiAPI.postProcessInstance(body).on('data', function(data) {
+     console.log(JSON.parse(data));
+ });
